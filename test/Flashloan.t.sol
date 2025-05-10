@@ -27,5 +27,4 @@ contract FlashloanTest is Test {
         assertGt(IERC20(aWeth).balanceOf(address(flashloan)), 1e18);
         console.log("aWETH balance after looping supply: ", IERC20(aWeth).balanceOf(address(flashloan)));
     }
-
 }
