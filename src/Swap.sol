@@ -15,19 +15,17 @@ contract Swap {
         //approve for uniswap router
         IERC20(weth).approve(uniswapRouter, amountIn);
 
-        ISwapRouter.ExactInputSingleParams memory params =
-            ISwapRouter.ExactInputSingleParams({
-                tokenIn: weth,
-                tokenOut: usdc,
-                fee: 3000,
-                recipient: msg.sender,
-                deadline: block.timestamp,
-                amountIn: amountIn,
-                amountOutMinimum: 0,
-                sqrtPriceLimitX96: 0
-            });
-        
-        ISwapRouter(uniswapRouter).exactInputSingle(params);
+        ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams({
+            tokenIn: weth,
+            tokenOut: usdc,
+            fee: 3000,
+            recipient: msg.sender,
+            deadline: block.timestamp,
+            amountIn: amountIn,
+            amountOutMinimum: 0,
+            sqrtPriceLimitX96: 0
+        });
 
+        ISwapRouter(uniswapRouter).exactInputSingle(params);
     }
 }

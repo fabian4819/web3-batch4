@@ -16,5 +16,12 @@ contract SwapTest is Test {
         swap = new Swap();
     }
 
-    
+    function test_swap() public {
+        deal(weth, address(this), 1e18);
+        IERC20(weth).approve(address(swap), 1e18);
+
+        swap.swap(1e18);
+        assertGt(IERC20(usdc).balanceOf(address(this)), 0, "USDC balance should be greater than 0");
+        console.log("USDC balance after swap: ", IERC20(usdc).balanceOf(address(this)));
+    }
 }
