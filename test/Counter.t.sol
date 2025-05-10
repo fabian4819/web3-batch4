@@ -15,7 +15,7 @@ contract CounterTest is Test {
     }
 
     function test_setPrice() public {
-        vm.prank(alice); //prank sebagai alice 
+        vm.prank(alice); //prank sebagai alice
         vm.expectRevert("Only the owner can set the price");
         counter.setPrice(100); //alice mencoba mengubah harga
 

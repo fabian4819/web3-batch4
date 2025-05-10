@@ -60,13 +60,13 @@ contract VaultTest is Test {
         vm.stopPrank();
 
         usdc.mint(address(this), 1_000_000);
-        usdc.approve(address(vault), 1_000_000); 
+        usdc.approve(address(vault), 1_000_000);
         vault.distributeYield(1_000_000);
 
         // charlie deposit 1jt
         vm.startPrank(charlie);
         usdc.approve(address(vault), 1_000_000);
-        vault.deposit(1_000_000);  
+        vault.deposit(1_000_000);
         assertEq(vault.balanceOf(charlie), 750_000);
         vm.stopPrank();
 

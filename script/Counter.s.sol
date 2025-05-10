@@ -6,7 +6,6 @@ import {Counter} from "../src/Counter.sol";
 
 contract CounterScript is Script {
     Counter public counter;
-    
 
     function setUp() public {}
 
