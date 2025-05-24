@@ -19,19 +19,23 @@ contract VaultTest is Test {
     }
 
     function test_Deposit() public {
+        // alice deposit 1000 usdc
         vm.startPrank(alice);
         usdc.mint(alice, 1000);
         usdc.approve(address(vault), 1000);
         vault.deposit(1000);
+         // cek apakah alice memiliki 1000 shares
         assertEq(vault.balanceOf(alice), 1000);
         vm.stopPrank();
 
+        // bob deposit 2000 usdc
         vm.startPrank(bob);
         usdc.mint(bob, 2000);
         usdc.approve(address(vault), 2000);
         vault.deposit(2000);
+         // cek apakah bob memiliki 2000 shares
         assertEq(vault.balanceOf(bob), 2000);
-        vm.stopPrank();
+        vm.stopPrank();     
     }
 
     function test_scenario() public {
@@ -59,6 +63,7 @@ contract VaultTest is Test {
         assertEq(vault.balanceOf(bob), 2_000_000);
         vm.stopPrank();
 
+        // distributeYield 1jt
         usdc.mint(address(this), 1_000_000);
         usdc.approve(address(vault), 1_000_000);
         vault.distributeYield(1_000_000);
@@ -68,18 +73,22 @@ contract VaultTest is Test {
         usdc.approve(address(vault), 1_000_000);
         vault.deposit(1_000_000);
         assertEq(vault.balanceOf(charlie), 750_000);
-        vm.stopPrank();
+        vm.stopPrank();     
 
-        //alice withdraw 1_000_000
+        // alice withdraw 1_000_000
         vm.startPrank(alice);
         vault.withdraw(1_000_000);
         assertEq(usdc.balanceOf(alice), 1_333_333);
         vm.stopPrank();
 
-        //bob withdraw 2_000_000
+        // bob withdraw 2_000_000
         vm.startPrank(bob);
         vault.withdraw(2_000_000);
         assertEq(usdc.balanceOf(bob), 2_666_666);
         vm.stopPrank();
+        
+        
     }
+        
+    
 }

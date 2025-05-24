@@ -12,7 +12,7 @@ contract Counter {
     }
 
     function setPrice(uint256 newPrice) public {
-        require(msg.sender == owner, "Only the owner can set the price");
+        require(msg.sender == owner, "Only owner can set price");
         price = newPrice;
     }
 

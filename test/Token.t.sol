@@ -22,7 +22,6 @@ contract TokenTest is Test {
         token.mint(bob, 3000);
         assertEq(token.balanceOf(bob), 3000);
         console.log("balance of bob", token.balanceOf(bob));
-
         token.mint(address(this), 1000);
         assertEq(token.balanceOf(address(this)), 1000);
         console.log("balance of this", token.balanceOf(address(this)));

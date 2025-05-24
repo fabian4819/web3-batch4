@@ -7,19 +7,19 @@ import {Counter} from "../src/Counter.sol";
 contract CounterTest is Test {
     Counter public counter;
 
-    address public alice = makeAddr("Alice"); //membuat akun alice
+    address public alice = makeAddr("Alice"); // membuat akun Alice
 
     function setUp() public {
         counter = new Counter();
         counter.setNumber(0);
     }
 
-    function test_setPrice() public {
-        vm.prank(alice); //prank sebagai alice
-        vm.expectRevert("Only the owner can set the price");
-        counter.setPrice(100); //alice mencoba mengubah harga
+    function test_SetPrice() public {
+        vm.prank(alice); // prank sebagai Alice
+        vm.expectRevert("Only owner can set price");
+        counter.setPrice(100);
 
-        vm.prank(address(this));
+        vm.prank(address(this)); // prank sebagai owner
         counter.setPrice(100);
         assertEq(counter.price(), 100);
         console.log("Price set to 100");

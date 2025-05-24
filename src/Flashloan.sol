@@ -25,7 +25,6 @@ contract Flashloan {
     address usdc = 0xaf88d065e77c8cC2239327C5EDb3A432268e5831;
 
     function loopingSupply(uint256 supplyAmount, uint256 borrowAmount) external {
-        // Transfer WETH from user to this contract
         IERC20(weth).transferFrom(msg.sender, address(this), supplyAmount);
 
         address[] memory tokens = new address[](1);
@@ -43,11 +42,12 @@ contract Flashloan {
         uint256[] memory feeAmounts,
         bytes memory data
     ) external {
+        // decode data
         (uint256 supplyAmount, uint256 borrowAmount) = abi.decode(data, (uint256, uint256));
 
+        // approve ke uniswapRouter
         IERC20(usdc).approve(uniswapRouter, borrowAmount);
 
-        // Swap USDC to WETH on Uniswap
         ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams({
             tokenIn: usdc,
             tokenOut: weth,
@@ -62,15 +62,17 @@ contract Flashloan {
         // lakukan proses swap
         uint256 outputWeth = ISwapRouter(uniswapRouter).exactInputSingle(params);
 
-        //supply ke aave
+        // supply ke aave
         uint256 totalEth = supplyAmount + outputWeth;
 
+        // supply ke aave
         IERC20(weth).approve(aave, totalEth);
-        // Supply WETH to Aave
         IAave(aave).supply(weth, totalEth, address(this), 0);
-        // Borrow USDC from Aave
+
+        // borrow ke aave
         IAave(aave).borrow(usdc, borrowAmount, 2, 0, address(this));
-        //bayar flashloan ke balancer
+
+        // bayar flashloan ke Balancer
         IERC20(usdc).transfer(balancerVault, borrowAmount);
     }
 }

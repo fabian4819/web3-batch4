@@ -15,17 +15,17 @@ contract Lending {
     address aave = 0x794a61358D6845594F94dc1DB02A252b5b4814aD;
 
     function supplyAndBorrow(uint256 supplyAmount, uint256 borrowAmount) external {
-        // Transfer WETH from user to this contract
+        // deposit
         IERC20(weth).transferFrom(msg.sender, address(this), supplyAmount);
 
-        // Supply WETH to Aave
+        // supply ke aave
         IERC20(weth).approve(aave, supplyAmount);
         IAave(aave).supply(weth, supplyAmount, address(this), 0);
 
-        // Borrow USDC from Aave
+        // borrow ke aave
         IAave(aave).borrow(usdc, borrowAmount, 2, 0, address(this));
 
-        // Send USDC to the user
-        require(IERC20(usdc).transfer(msg.sender, borrowAmount), "USDC transfer failed");
+        // transfer usdc ke msg.sender
+        IERC20(usdc).transfer(msg.sender, borrowAmount);
     }
 }
