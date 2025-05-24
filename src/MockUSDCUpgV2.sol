@@ -5,7 +5,7 @@ import {ERC20Upgradeable} from "lib/openzeppelin-contracts-upgradeable/contracts
 import {Initializable} from "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol";
 import {ERC1967Utils} from "lib/openzeppelin-contracts/contracts/proxy/ERC1967/ERC1967Utils.sol";
 
-contract MockUSDCUpg is Initializable, ERC20Upgradeable {
+contract MockUSDCUpgV2 is Initializable, ERC20Upgradeable {
     function getAdmin() public view returns (address) {
         return ERC1967Utils.getAdmin();
     }
@@ -27,6 +27,6 @@ contract MockUSDCUpg is Initializable, ERC20Upgradeable {
     }
 
     function version() public pure returns (uint256) {
-        return 1;
+        return 2;
     }
 }
